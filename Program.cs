@@ -38,7 +38,10 @@
                         break;
 
                     case 3:
-                        Console.WriteLine("Filter by status");
+                        Console.Clear();
+                        jobApplication.SortByStatus();
+                        Thread.Sleep(500);
+                        Console.Clear();
                         break;
 
                     case 4:
@@ -49,7 +52,8 @@
                         break;
 
                     case 5:
-                        Console.WriteLine("Show statistics");
+                        Console.Clear();
+                        jobApplication.ShowStatistics();
                         break;
                 }
 

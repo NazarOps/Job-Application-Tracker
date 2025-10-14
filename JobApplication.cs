@@ -52,11 +52,6 @@ namespace Job_Application_Tracker
             jobApplications.Add(jobapplied);
         }
 
-        public void GetDaysSinceApplied()
-        {
-
-        }
-
         public void GetSummary()
         {
             Console.WriteLine("Your job Applications: ");
@@ -77,6 +72,23 @@ namespace Job_Application_Tracker
             foreach (var job in jobApplications)
             {             
                 Console.WriteLine($"{job.CompanyName} - {job.ApplicationDate}");
+            }
+        }
+
+        public void SortByStatus()
+        {
+            jobApplications.Sort((a,b) => a.ApplicationStatus.CompareTo(b.ApplicationStatus));
+            foreach (var job in jobApplications)
+            {
+                Console.WriteLine($"{job.CompanyName} - {job.ApplicationStatus}");
+            }
+        }
+
+        public void ShowStatistics()
+        {
+            foreach (var job in jobApplications)
+            {
+                Console.WriteLine($"Applied to jobs: {jobApplications.Count}");
             }
         }
     }
