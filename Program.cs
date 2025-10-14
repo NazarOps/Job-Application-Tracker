@@ -6,7 +6,6 @@
         {
             bool MenuLoop = true;
 
-
             JobApplication jobApplication = new JobApplication();
 
             while (MenuLoop)
@@ -32,8 +31,10 @@
                         break;
 
                     case 2:
-                        Console.WriteLine("Show all");
+                        Console.Clear();
                         jobApplication.GetSummary();
+                        Thread.Sleep(500);
+                        Console.Clear();
                         break;
 
                     case 3:
@@ -41,7 +42,10 @@
                         break;
 
                     case 4:
-                        Console.WriteLine("Show by date");
+                        Console.Clear();
+                        jobApplication.SortByDate();
+                        Thread.Sleep(500);
+                        Console.Clear();
                         break;
 
                     case 5:
