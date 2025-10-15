@@ -39,11 +39,17 @@
                         break;
 
                     case 3:
-                        Console.WriteLine("Filter by status");
+                        Console.WriteLine("Filter by status: ");
+                        jobApplication.SortByStatus();
+                        Thread.Sleep(500);
+                        Console.Clear();
                         break;
 
                     case 4:
-                        Console.WriteLine("Sort by status");
+                        Console.WriteLine("Sort by statistics");
+                        jobApplication.ShowStatistics();
+                        Thread.Sleep(500);
+                        Console.Clear();
                         break;
 
                     case 5:
