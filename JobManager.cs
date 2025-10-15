@@ -6,15 +6,55 @@ using System.Threading.Tasks;
 
 namespace Job_Application_Tracker
 {
-    internal class JobManager
+    public class JobManager
     {
+        List<JobApplication> jobApplications = new List<JobApplication>();
         
-
-
-
-        public void ManageJobs()
+        public void AddApplication(JobApplication application)
         {
+            jobApplications.Add(application);
+        }
 
+        public void GetSummary()
+        {
+            Console.WriteLine("Your job Applications: ");
+            foreach (JobApplication j in jobApplications)
+            {
+                Console.WriteLine($"\nName: {j.CompanyName}");
+                Console.WriteLine($"Title: {j.PositionTitle}");
+                Console.WriteLine($"Expected Salary: {j.SalaryExpectation}\n");
+                Console.WriteLine($"Status: {j.ApplicationStatus}");
+                Console.WriteLine($"Date: {j.ApplicationDate}\n");
+            }
+            Thread.Sleep(500);
+            Console.Clear();
+        }
+
+        public void SortByDate()
+        {
+            jobApplications.Sort((a, b) => a.ApplicationDate.CompareTo(b.ApplicationDate));
+            foreach (var job in jobApplications)
+            {
+                Console.WriteLine($"{job.CompanyName} - {job.ApplicationDate}");
+            }
+        }
+
+        public void SortByStatus()
+        {
+            jobApplications.Sort((a, b) => a.ApplicationStatus.CompareTo(b.ApplicationStatus));
+            foreach (var job in jobApplications)
+            {
+                Console.WriteLine($"{job.CompanyName} - {job.ApplicationStatus}");
+            }
+        }
+
+        public void ShowStatistics()
+        {
+            foreach (var job in jobApplications)
+            {
+                Console.WriteLine($"Total jobs you've applied to: {jobApplications.Count}");
+
+            }
         }
     }
 }

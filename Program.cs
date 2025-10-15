@@ -4,10 +4,13 @@
     {
         static void Main(string[] args)
         {
-            bool MenuLoop = true;
+            JobApplication jobApplication = new JobApplication();
 
             JobApplication jobApplication = new JobApplication();
 
+            JobManager jobManager = new JobManager();
+            bool MenuLoop = true;
+            
             while (MenuLoop)
             {
                 Console.WriteLine("Job Application Tracker\n");
@@ -26,28 +29,29 @@
                 {
                     case 1:
                         Console.Clear();
-                        jobApplication.Apply();
+                        application.Apply(manager);
                         Thread.Sleep(500);
                         Console.Clear();
                         break;
 
                     case 2:
-                        Console.WriteLine("All of your applications: ");
-                        jobApplication.GetSummary();
+                        Console.Clear();
+                        Console.WriteLine("All of your applications: \n");
+                        manager.GetSummary();
                         Thread.Sleep(500);
                         Console.Clear();
                         break;
 
                     case 3:
                         Console.WriteLine("Filter by status: ");
-                        jobApplication.SortByStatus();
+                        manager.SortByStatus();
                         Thread.Sleep(500);
                         Console.Clear();
                         break;
 
                     case 4:
                         Console.WriteLine("Sort by statistics");
-                        jobApplication.ShowStatistics();
+                        manager.ShowStatistics();
                         Thread.Sleep(500);
                         Console.Clear();
                         break;
@@ -57,7 +61,7 @@
                         jobApplication.ShowStatistics();
                         break;
 
-                    case 6:
+                    
 
                 }
 
