@@ -6,9 +6,7 @@
         {
             JobApplication jobApplication = new JobApplication();
 
-
-            var manager = new JobManager();
-            var application = new JobApplication();
+            JobApplication jobApplication = new JobApplication();
 
             JobManager jobManager = new JobManager();
             bool MenuLoop = true;
@@ -59,7 +57,8 @@
                         break;
 
                     case 5:
-                        Console.WriteLine("Show statistics");
+                        Console.Clear();
+                        jobApplication.ShowStatistics();
                         break;
 
                     
