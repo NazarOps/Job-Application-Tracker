@@ -93,9 +93,9 @@ namespace Job_Application_Tracker
             {
                 Console.WriteLine($"\nName: {j.CompanyName}");
                 Console.WriteLine($"Title: {j.PositionTitle}");
+                Console.WriteLine($"Expected Salary: {j.SalaryExpectation}\n");
                 Console.WriteLine($"Status: {j.ApplicationStatus}");
                 Console.WriteLine($"Date: {j.ApplicationDate}\n");
-                Console.WriteLine($"Expected Salary: {j.SalaryExpectation}\n");
             }
             Thread.Sleep(500);
             Console.Clear();
