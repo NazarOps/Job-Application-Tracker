@@ -6,7 +6,6 @@
         {
             bool MenuLoop = true;
 
-
             JobApplication jobApplication = new JobApplication();
 
             while (MenuLoop)
@@ -54,7 +53,8 @@
                         break;
 
                     case 5:
-                        Console.WriteLine("Show statistics");
+                        Console.Clear();
+                        jobApplication.ShowStatistics();
                         break;
 
                     case 6:
