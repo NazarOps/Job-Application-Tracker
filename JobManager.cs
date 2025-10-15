@@ -25,6 +25,7 @@ namespace Job_Application_Tracker
                 Console.WriteLine($"Expected Salary: {j.SalaryExpectation}\n");
                 Console.WriteLine($"Status: {j.ApplicationStatus}");
                 Console.WriteLine($"Date: {j.ApplicationDate}\n");
+                Console.WriteLine($"Responded Date: {j.ResponseDate}");
             }
             Thread.Sleep(500);
             Console.ReadKey();
