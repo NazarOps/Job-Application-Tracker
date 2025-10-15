@@ -17,6 +17,7 @@
                 Console.WriteLine("3) Filter by status");
                 Console.WriteLine("4) Sort by date");
                 Console.WriteLine("5) Show statistics");
+                Console.WriteLine("6) Manage jobs");
                 Console.WriteLine("\nType 6 to quit the application");
 
                 Console.Write("\nuser: ");
@@ -55,6 +56,9 @@
                     case 5:
                         Console.WriteLine("Show statistics");
                         break;
+
+                    case 6:
+
                 }
 
                 if (userinput == 6)

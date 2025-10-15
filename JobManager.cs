@@ -8,5 +8,13 @@ namespace Job_Application_Tracker
 {
     internal class JobManager
     {
+        
+
+
+
+        public void ManageJobs()
+        {
+
+        }
     }
 }

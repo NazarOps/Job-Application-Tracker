@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Job_Application_Tracker
 {
-    internal class JobApplication
+    public class JobApplication
     {
         public string CompanyName { get; set; }
         public string PositionTitle { get; set; }
@@ -48,15 +48,27 @@ namespace Job_Application_Tracker
                     Console.Write("User: ");
                     string TitleOfPosition = Console.ReadLine();
 
+                    Console.WriteLine("What's the expected salary?");
+                    Console.Write("User: ");
+                    string ExpectedSalary = Console.ReadLine();
+
                     if (!Regex.IsMatch(TitleOfPosition, @"^[a-zA-Z-\s]+$"))
                     {
                         throw new ArgumentException("Position title contains invalid characters, only letters and spaces are allowed!");
                     }
 
+                    if (!int.TryParse(ExpectedSalary, out int SalaryExpectation) || SalaryExpectation  <= 0)
+                    {
+                        throw new ArgumentException("Salary must contain only numbers and can no symbols");
+                    }
+
+                    int DesiredSalary = Convert.ToInt32(ExpectedSalary); // converts salary to int after checking if input is valid
+
                     JobApplication jobapplied = new JobApplication
                     {
                         CompanyName = NameOfCompany,
                         PositionTitle = TitleOfPosition,
+                        SalaryExpectation = DesiredSalary,
                         ApplicationStatus = Status.Applied,
                         ApplicationDate = DateTime.Now
                     };
@@ -66,9 +78,9 @@ namespace Job_Application_Tracker
                     Console.WriteLine("Job application has been logged");
                 }
 
-                catch (ArgumentException)
+                catch (ArgumentException ex)
                 {
-                    Console.WriteLine("Title of Position can not contain symbols or numbers");
+                    Console.WriteLine($"Error: {ex.Message}");
                     
                 }
             }
