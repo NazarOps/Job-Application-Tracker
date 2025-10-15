@@ -52,7 +52,25 @@ namespace Job_Application_Tracker
                     Console.Write("User: ");
                     string ExpectedSalary = Console.ReadLine();
 
-                    if (!Regex.IsMatch(TitleOfPosition, @"^[a-zA-Z-\s]+$"))
+                    Console.WriteLine("Do you have a response date? (yes/no)");
+                    Console.Write("User: ");
+                    string hasResponse = Console.ReadLine();
+                    DateTime? responseDate = null;
+                    if (hasResponse?.ToLower() == "yes")
+                    {
+                        Console.WriteLine("Enter the response date (yyyy-mm-dd)");
+                        string responseInput = Console.ReadLine();
+                        if (DateTime.TryParse(responseInput, out DateTime parsedDate))
+                        {
+                            responseDate = parsedDate;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid date format. Response date will be left empty.");
+                        }
+                    }
+
+                        if (!Regex.IsMatch(TitleOfPosition, @"^[a-zA-Z-\s]+$"))
                     {
                         throw new ArgumentException("Position title contains invalid characters, only letters and spaces are allowed!");
                     }
@@ -70,7 +88,8 @@ namespace Job_Application_Tracker
                         PositionTitle = TitleOfPosition,
                         SalaryExpectation = DesiredSalary,
                         ApplicationStatus = Status.Applied,
-                        ApplicationDate = DateTime.Now
+                        ApplicationDate = DateTime.Now,
+                        ResponseDate = responseDate
                     };
 
                     manager.AddApplication(jobapplied);
