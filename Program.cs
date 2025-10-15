@@ -43,6 +43,7 @@
                         break;
 
                     case 3:
+                        Console.Clear();
                         Console.WriteLine("Filter by status: ");
                         manager.SortByStatus();
                         Thread.Sleep(500);
@@ -50,6 +51,7 @@
                         break;
 
                     case 4:
+                        Console.Clear();
                         Console.WriteLine("Sort by statistics");
                         manager.ShowStatistics();
                         Thread.Sleep(500);
