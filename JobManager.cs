@@ -27,6 +27,7 @@ namespace Job_Application_Tracker
                 Console.WriteLine($"Date: {j.ApplicationDate}\n");
             }
             Thread.Sleep(500);
+            Console.ReadKey();
             Console.Clear();
         }
 

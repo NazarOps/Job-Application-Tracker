@@ -30,6 +30,8 @@
                     case 1:
                         Console.Clear();
                         new JobApplication().Apply(jobManager);
+                        Console.WriteLine("\nPress any key to go back to menu");
+                        Console.ReadKey();
                         Thread.Sleep(500);
                         Console.Clear();
                         break;
@@ -38,6 +40,8 @@
                         Console.Clear();
                         Console.WriteLine("All of your applications: \n");
                         jobManager.GetSummary();
+                        Console.WriteLine("\nPress any key to go back to menu");
+                        Console.ReadKey();
                         Thread.Sleep(500);
                         Console.Clear();
                         break;
@@ -46,6 +50,8 @@
                         Console.Clear();
                         Console.WriteLine("Filter by status: ");
                         jobManager.SortByStatus();
+                        Console.WriteLine("\nPress any key to go back to menu");
+                        Console.ReadKey();
                         Thread.Sleep(500);
                         Console.Clear();
                         break;
@@ -54,6 +60,8 @@
                         Console.Clear();
                         Console.WriteLine("Sort by date");
                         jobManager.SortByDate();
+                        Console.WriteLine("\nPress any key to go back to menu");
+                        Console.ReadKey();
                         Thread.Sleep(500);
                         Console.Clear();
                         break;
@@ -62,6 +70,8 @@
                         Console.Clear();
                         Console.WriteLine("Total jobs you've applied to: ");
                         jobManager.ShowStatistics();
+                        Console.WriteLine("\nPress any key to go back to menu");
+                        Console.ReadKey();
                         Thread.Sleep(500);
                         Console.Clear();
                         break;
