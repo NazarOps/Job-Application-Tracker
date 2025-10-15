@@ -57,7 +57,7 @@
                         Console.WriteLine("Show statistics");
                         break;
 
-                    case 6:
+                    
 
                 }
 
