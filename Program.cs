@@ -16,6 +16,7 @@
                 Console.WriteLine("3) Filter by status");
                 Console.WriteLine("4) Sort by date");
                 Console.WriteLine("5) Show statistics");
+                Console.WriteLine("6) Manage jobs");
                 Console.WriteLine("\nType 6 to quit the application");
 
                 Console.Write("\nuser: ");
@@ -31,22 +32,22 @@
                         break;
 
                     case 2:
-                        Console.Clear();
+                        Console.WriteLine("All of your applications: ");
                         jobApplication.GetSummary();
                         Thread.Sleep(500);
                         Console.Clear();
                         break;
 
                     case 3:
-                        Console.Clear();
+                        Console.WriteLine("Filter by status: ");
                         jobApplication.SortByStatus();
                         Thread.Sleep(500);
                         Console.Clear();
                         break;
 
                     case 4:
-                        Console.Clear();
-                        jobApplication.SortByDate();
+                        Console.WriteLine("Sort by statistics");
+                        jobApplication.ShowStatistics();
                         Thread.Sleep(500);
                         Console.Clear();
                         break;
@@ -55,6 +56,9 @@
                         Console.Clear();
                         jobApplication.ShowStatistics();
                         break;
+
+                    case 6:
+
                 }
 
                 if (userinput == 6)

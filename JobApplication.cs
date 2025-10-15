@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Job_Application_Tracker
 {
-    internal class JobApplication
+    public class JobApplication
     {
         public string CompanyName { get; set; }
         public string PositionTitle { get; set; }
@@ -33,23 +34,56 @@ namespace Job_Application_Tracker
 
         public void Apply()
         {
-            Console.WriteLine("What's the company called?");
-            Console.Write("\nUser: ");
-            string NameOfCompany = Console.ReadLine();
+            bool valid = false;
 
-            Console.WriteLine("What's the position title?");
-            Console.Write("User: ");
-            string TitleOfPosition = Console.ReadLine();
-
-            JobApplication jobapplied = new JobApplication
+            while (!valid)
             {
-                CompanyName = NameOfCompany,
-                PositionTitle = TitleOfPosition,
-                ApplicationStatus = Status.Applied,
-                ApplicationDate = DateTime.Now
-            };
+                try
+                {
+                    Console.WriteLine("What's the company called?");
+                    Console.Write("\nUser: ");
+                    string NameOfCompany = Console.ReadLine();
 
-            jobApplications.Add(jobapplied);
+                    Console.WriteLine("What's the position title?");
+                    Console.Write("User: ");
+                    string TitleOfPosition = Console.ReadLine();
+
+                    Console.WriteLine("What's the expected salary?");
+                    Console.Write("User: ");
+                    string ExpectedSalary = Console.ReadLine();
+
+                    if (!Regex.IsMatch(TitleOfPosition, @"^[a-zA-Z-\s]+$"))
+                    {
+                        throw new ArgumentException("Position title contains invalid characters, only letters and spaces are allowed!");
+                    }
+
+                    if (!int.TryParse(ExpectedSalary, out int SalaryExpectation) || SalaryExpectation  <= 0)
+                    {
+                        throw new ArgumentException("Salary must contain only numbers and can no symbols");
+                    }
+
+                    int DesiredSalary = Convert.ToInt32(ExpectedSalary); // converts salary to int after checking if input is valid
+
+                    JobApplication jobapplied = new JobApplication
+                    {
+                        CompanyName = NameOfCompany,
+                        PositionTitle = TitleOfPosition,
+                        SalaryExpectation = DesiredSalary,
+                        ApplicationStatus = Status.Applied,
+                        ApplicationDate = DateTime.Now
+                    };
+
+                    jobApplications.Add(jobapplied);
+                    valid = true;
+                    Console.WriteLine("Job application has been logged");
+                }
+
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                    
+                }
+            }
         }
 
         public void GetSummary()
@@ -70,14 +104,14 @@ namespace Job_Application_Tracker
         {
             jobApplications.Sort((a, b) => a.ApplicationDate.CompareTo(b.ApplicationDate));
             foreach (var job in jobApplications)
-            {             
+            {
                 Console.WriteLine($"{job.CompanyName} - {job.ApplicationDate}");
             }
         }
 
         public void SortByStatus()
         {
-            jobApplications.Sort((a,b) => a.ApplicationStatus.CompareTo(b.ApplicationStatus));
+            jobApplications.Sort((a, b) => a.ApplicationStatus.CompareTo(b.ApplicationStatus));
             foreach (var job in jobApplications)
             {
                 Console.WriteLine($"{job.CompanyName} - {job.ApplicationStatus}");
@@ -88,7 +122,8 @@ namespace Job_Application_Tracker
         {
             foreach (var job in jobApplications)
             {
-                Console.WriteLine($"Applied to jobs: {jobApplications.Count}");
+                Console.WriteLine($"Total jobs you've applied to: {jobApplications.Count}");
+                
             }
         }
     }
