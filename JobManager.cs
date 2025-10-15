@@ -53,8 +53,9 @@ namespace Job_Application_Tracker
         {
             foreach (var job in jobApplications)
             {
+                int responseCount = jobApplications.Count(job => job.ResponseDate != null);
                 Console.WriteLine($"Total jobs you've applied to: {jobApplications.Count}");
-
+                Console.WriteLine($"Total responds: {responseCount}");
             }
         }
     }
