@@ -6,7 +6,7 @@
         {
             JobApplication jobApplication = new JobApplication();
 
-            JobApplication jobApplication = new JobApplication();
+            
 
             JobManager jobManager = new JobManager();
             bool MenuLoop = true;
@@ -29,7 +29,7 @@
                 {
                     case 1:
                         Console.Clear();
-                        application.Apply(manager);
+                        new JobApplication().Apply(jobManager);
                         Thread.Sleep(500);
                         Console.Clear();
                         break;
@@ -37,7 +37,7 @@
                     case 2:
                         Console.Clear();
                         Console.WriteLine("All of your applications: \n");
-                        manager.GetSummary();
+                        jobManager.GetSummary();
                         Thread.Sleep(500);
                         Console.Clear();
                         break;
@@ -45,22 +45,25 @@
                     case 3:
                         Console.Clear();
                         Console.WriteLine("Filter by status: ");
-                        manager.SortByStatus();
+                        jobManager.SortByStatus();
                         Thread.Sleep(500);
                         Console.Clear();
                         break;
 
                     case 4:
                         Console.Clear();
-                        Console.WriteLine("Sort by statistics");
-                        manager.ShowStatistics();
+                        Console.WriteLine("Sort by date");
+                        jobManager.SortByDate();
                         Thread.Sleep(500);
                         Console.Clear();
                         break;
 
                     case 5:
                         Console.Clear();
-                        jobApplication.ShowStatistics();
+                        Console.WriteLine("Total jobs you've applied to: ");
+                        jobManager.ShowStatistics();
+                        Thread.Sleep(500);
+                        Console.Clear();
                         break;
 
                     
