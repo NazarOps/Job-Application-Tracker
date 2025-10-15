@@ -22,7 +22,7 @@ namespace Job_Application_Tracker
 
 
 
-        List<JobApplication> jobApplications = new List<JobApplication>();
+        
 
         public enum Status
         {
@@ -32,7 +32,7 @@ namespace Job_Application_Tracker
             Rejected
         }
 
-        public void Apply()
+        public void Apply(JobManager manager)
         {
             bool valid = false;
 
@@ -73,7 +73,7 @@ namespace Job_Application_Tracker
                         ApplicationDate = DateTime.Now
                     };
 
-                    jobApplications.Add(jobapplied);
+                    manager.AddApplication(jobapplied);
                     valid = true;
                     Console.WriteLine("Job application has been logged");
                 }
@@ -86,46 +86,6 @@ namespace Job_Application_Tracker
             }
         }
 
-        public void GetSummary()
-        {
-            Console.WriteLine("Your job Applications: ");
-            foreach (JobApplication j in jobApplications)
-            {
-                Console.WriteLine($"\nName: {j.CompanyName}");
-                Console.WriteLine($"Title: {j.PositionTitle}");
-                Console.WriteLine($"Expected Salary: {j.SalaryExpectation}\n");
-                Console.WriteLine($"Status: {j.ApplicationStatus}");
-                Console.WriteLine($"Date: {j.ApplicationDate}\n");
-            }
-            Thread.Sleep(500);
-            Console.Clear();
-        }
-
-        public void SortByDate()
-        {
-            jobApplications.Sort((a, b) => a.ApplicationDate.CompareTo(b.ApplicationDate));
-            foreach (var job in jobApplications)
-            {
-                Console.WriteLine($"{job.CompanyName} - {job.ApplicationDate}");
-            }
-        }
-
-        public void SortByStatus()
-        {
-            jobApplications.Sort((a, b) => a.ApplicationStatus.CompareTo(b.ApplicationStatus));
-            foreach (var job in jobApplications)
-            {
-                Console.WriteLine($"{job.CompanyName} - {job.ApplicationStatus}");
-            }
-        }
-
-        public void ShowStatistics()
-        {
-            foreach (var job in jobApplications)
-            {
-                Console.WriteLine($"Total jobs you've applied to: {jobApplications.Count}");
-                
-            }
-        }
+   
     }
 }
