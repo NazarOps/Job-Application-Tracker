@@ -25,7 +25,7 @@ namespace Job_Application_Tracker
                 Console.WriteLine($"Expected Salary: {j.SalaryExpectation}\n");
                 Console.WriteLine($"Status: {j.ApplicationStatus}");
                 Console.WriteLine($"Date: {j.ApplicationDate}\n");
-                Console.WriteLine($"Responded Date: {j.ResponseDate}");
+                Console.WriteLine($"Responded Date: {(j.ResponseDate.HasValue ? j.ResponseDate.Value.ToString("yyyy-MM-dd HH:mm") : "No response")}");
             }
             Thread.Sleep(500);
             Console.ReadKey();

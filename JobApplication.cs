@@ -70,6 +70,11 @@ namespace Job_Application_Tracker
                         }
                     }
 
+                    if (hasResponse?.ToLower() == "no")
+                    {
+                        responseDate = null;
+                    }
+
                         if (!Regex.IsMatch(TitleOfPosition, @"^[a-zA-Z-\s]+$"))
                     {
                         throw new ArgumentException("Position title contains invalid characters, only letters and spaces are allowed!");
