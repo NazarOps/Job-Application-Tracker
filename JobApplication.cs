@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Job_Application_Tracker
@@ -33,96 +34,85 @@ namespace Job_Application_Tracker
 
         public void Apply()
         {
-            try
+            bool valid = false;
+
+            while (!valid)
             {
-                Console.WriteLine("What's the company called?");
-                Console.Write("\nUser: ");
-                string NameOfCompany = Console.ReadLine();
-
-                Console.WriteLine("What's the position title?");
-                Console.Write("User: ");
-                string TitleOfPosition = Console.ReadLine();
-
-                JobApplication jobapplied = new JobApplication
+                try
                 {
-                    CompanyName = NameOfCompany,
-                    PositionTitle = TitleOfPosition,
-                    ApplicationStatus = Status.Applied,
-                    ApplicationDate = DateTime.Now
-                };
+                    Console.WriteLine("What's the company called?");
+                    Console.Write("\nUser: ");
+                    string NameOfCompany = Console.ReadLine();
 
-                jobApplications.Add(jobapplied);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred while applying: {ex.Message}");
+                    Console.WriteLine("What's the position title?");
+                    Console.Write("User: ");
+                    string TitleOfPosition = Console.ReadLine();
+
+                    if (!Regex.IsMatch(TitleOfPosition, @"^[a-zA-Z-\s]+$"))
+                    {
+                        throw new ArgumentException("Position title contains invalid characters, only letters and spaces are allowed!");
+                    }
+
+                    JobApplication jobapplied = new JobApplication
+                    {
+                        CompanyName = NameOfCompany,
+                        PositionTitle = TitleOfPosition,
+                        ApplicationStatus = Status.Applied,
+                        ApplicationDate = DateTime.Now
+                    };
+
+                    jobApplications.Add(jobapplied);
+                    valid = true;
+                    Console.WriteLine("Job application has been logged");
+                }
+
+                catch (ArgumentException)
+                {
+                    Console.WriteLine("Title of Position can not contain symbols or numbers");
+                    
+                }
             }
         }
 
         public void GetSummary()
         {
-            try
+            Console.WriteLine("Your job Applications: ");
+            foreach (JobApplication j in jobApplications)
             {
-                Console.WriteLine("Your job Applications: ");
-                foreach (JobApplication j in jobApplications)
-                {
-                    Console.WriteLine($"\nName: {j.CompanyName}");
-                    Console.WriteLine($"Title: {j.PositionTitle}");
-                    Console.WriteLine($"Status: {j.ApplicationStatus}");
-                    Console.WriteLine($"Date: {j.ApplicationDate}\n");
-                }
-                Thread.Sleep(500);
-                Console.Clear();
+                Console.WriteLine($"\nName: {j.CompanyName}");
+                Console.WriteLine($"Title: {j.PositionTitle}");
+                Console.WriteLine($"Status: {j.ApplicationStatus}");
+                Console.WriteLine($"Date: {j.ApplicationDate}\n");
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred while getting the summary: {ex.Message}");
-            }
+            Thread.Sleep(500);
+            Console.Clear();
         }
 
         public void SortByDate()
         {
-            try
+            jobApplications.Sort((a, b) => a.ApplicationDate.CompareTo(b.ApplicationDate));
+            foreach (var job in jobApplications)
             {
-                jobApplications.Sort((a, b) => a.ApplicationDate.CompareTo(b.ApplicationDate));
-                foreach (var job in jobApplications)
-                {
-                    Console.WriteLine($"{job.CompanyName} - {job.ApplicationDate}");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred while sorting by date: {ex.Message}");
+                Console.WriteLine($"{job.CompanyName} - {job.ApplicationDate}");
             }
         }
 
         public void SortByStatus()
         {
-            try
+            jobApplications.Sort((a, b) => a.ApplicationStatus.CompareTo(b.ApplicationStatus));
+            foreach (var job in jobApplications)
             {
-                jobApplications.Sort((a, b) => a.ApplicationStatus.CompareTo(b.ApplicationStatus));
-                foreach (var job in jobApplications)
-                {
-                    Console.WriteLine($"{job.CompanyName} - {job.ApplicationStatus}");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred while sorting by status: {ex.Message}");
+                Console.WriteLine($"{job.CompanyName} - {job.ApplicationStatus}");
             }
         }
 
         public void ShowStatistics()
         {
-            try
+            foreach (var job in jobApplications)
             {
                 Console.WriteLine($"Total jobs you've applied to: {jobApplications.Count}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred while showing statistics: {ex.Message}");
+                
             }
         }
-
     }
 }
