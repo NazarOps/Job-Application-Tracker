@@ -66,5 +66,10 @@ namespace Job_Application_Tracker
             Console.WriteLine($"Total interviews: {TotalInterviews}");
             
         }
+
+        public void ManageJobs()
+        {
+            
+        }
     }
 }
