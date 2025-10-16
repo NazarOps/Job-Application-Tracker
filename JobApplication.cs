@@ -55,6 +55,18 @@ namespace Job_Application_Tracker
                     Console.WriteLine("Do you have a response date? (yes/no)");
                     Console.Write("User: ");
                     string hasResponse = Console.ReadLine();
+
+                    Console.WriteLine("Do you have a interview lined up? (yes/no)");
+                    Console.Write("User: ");
+                    string hasInterview = Console.ReadLine();
+
+                    JobApplication.Status status = Status.Applied; // Declaring status
+
+                    if(hasInterview.ToLower() == "yes")
+                    {
+                        status = Status.Interview;
+                    }
+
                     DateTime? responseDate = null;
                     if (hasResponse?.ToLower() == "yes")
                     {
@@ -87,12 +99,18 @@ namespace Job_Application_Tracker
 
                     int DesiredSalary = Convert.ToInt32(ExpectedSalary); // converts salary to int after checking if input is valid
 
+                    
+                    if (hasInterview.ToLower() == "yes")
+                    {
+                        status = Status.Interview;
+                    }
+
                     JobApplication jobapplied = new JobApplication
                     {
                         CompanyName = NameOfCompany,
                         PositionTitle = TitleOfPosition,
                         SalaryExpectation = DesiredSalary,
-                        ApplicationStatus = Status.Applied,
+                        ApplicationStatus = status,
                         ApplicationDate = DateTime.Now,
                         ResponseDate = responseDate
                     };

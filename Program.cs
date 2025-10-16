@@ -68,7 +68,6 @@
 
                     case 5:
                         Console.Clear();
-                        Console.WriteLine("Total jobs you've applied to: ");
                         jobManager.ShowStatistics();
                         Console.WriteLine("\nPress any key to go back to menu");
                         Console.ReadKey();

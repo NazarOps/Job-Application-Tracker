@@ -26,6 +26,8 @@ namespace Job_Application_Tracker
                 Console.WriteLine($"Status: {j.ApplicationStatus}");
                 Console.WriteLine($"Date: {j.ApplicationDate}\n");
                 Console.WriteLine($"Responded Date: {(j.ResponseDate.HasValue ? j.ResponseDate.Value.ToString("yyyy-MM-dd HH:mm") : "No response")}");
+                
+                Console.WriteLine("===============================================");
             }
             Thread.Sleep(500);
             Console.ReadKey();
@@ -52,12 +54,17 @@ namespace Job_Application_Tracker
 
         public void ShowStatistics()
         {
-            foreach (var job in jobApplications)
-            {
-                int responseCount = jobApplications.Count(job => job.ResponseDate != null);
-                Console.WriteLine($"Total jobs you've applied to: {jobApplications.Count}");
-                Console.WriteLine($"Total responds: {responseCount}");
-            }
+            int TotalOffered = jobApplications.Count(job => job.ApplicationStatus == JobApplication.Status.Offer);
+            int TotalRejected = jobApplications.Count(job => job.ApplicationStatus == JobApplication.Status.Rejected);
+            int TotalInterviews = jobApplications.Count(job => job.ApplicationStatus == JobApplication.Status.Interview);
+            int responseCount = jobApplications.Count(job => job.ResponseDate != null);
+            
+            Console.WriteLine($"Total jobs you've applied to: {jobApplications.Count}");
+            Console.WriteLine($"Total responds: {responseCount}");
+            Console.WriteLine($"Total offers: {TotalOffered}");
+            Console.WriteLine($"Total rejected: {TotalRejected}");
+            Console.WriteLine($"Total interviews: {TotalInterviews}");
+            
         }
     }
 }
