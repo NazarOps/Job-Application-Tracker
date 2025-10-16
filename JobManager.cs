@@ -71,8 +71,7 @@ namespace Job_Application_Tracker
         {
            Console.Clear();
            Console.WriteLine("What would you like to do?");
-           Console.WriteLine("1) Remove an application");
-           Console.WriteLine("2) Edit status");
+           Console.WriteLine("1) Edit status");
  
            Console.Write("User: ");
             
@@ -107,17 +106,56 @@ namespace Job_Application_Tracker
                     Console.WriteLine($"Selected application: {selectedJob.CompanyName} - {selectedJob.PositionTitle}");
                     
                     Console.WriteLine("What would you like to do?");
+                    Console.WriteLine("1) Remove");
+                    Console.WriteLine("2) Edit Application Status");
 
                     Console.Write("User: ");
                     string UserEdit = Console.ReadLine();
 
-                    if (UserEdit == "remove")
+                    if (UserEdit == "1")
                     {
                         jobApplications.Remove(selectedJob);
                         Console.WriteLine("Job removed from the list");
                         Thread.Sleep(500);
                         Console.Clear();
                     }
+
+                    if (UserEdit == "2")
+                    {
+                        Console.WriteLine("Update your status to: ");
+                        Console.WriteLine("1.) Hired");
+                        Console.WriteLine("2.) Rejected");
+                        Console.WriteLine("3.) Interview");
+
+                        Console.Write("User: ");
+                        string UpdateStatus = Console.ReadLine();
+
+                        if (UpdateStatus == "1")
+                        {
+                            selectedJob.ApplicationStatus = JobApplication.Status.Offer;
+                            Console.WriteLine("Application status changed to offered");
+                            Thread.Sleep(500);
+                            Console.Clear();
+                        }
+
+                        if (UpdateStatus == "2")
+                        {
+                            selectedJob.ApplicationStatus = JobApplication.Status.Rejected;
+                            Console.WriteLine("Application status changed to rejected");
+                            Thread.Sleep(500);
+                            Console.Clear();
+                        }
+
+                        if (UpdateStatus == "3")
+                        {
+                            selectedJob.ApplicationStatus = JobApplication.Status.Interview;
+                            Console.WriteLine("Application status changed to interview");
+                            Thread.Sleep(500);
+                            Console.Clear();
+                        }
+                    }
+
+                    
                 }
                 
                 else
