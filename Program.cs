@@ -81,7 +81,7 @@
 
                 if (userinput == 6)
                 {
-                    break;
+                    jobManager.ManageJobs();
                 }
             }
         }
