@@ -18,7 +18,7 @@ namespace Job_Application_Tracker
 
         public Status ApplicationStatus { get; set; }
 
-        public int DaysSinceApplied => (DateTime.Now - ApplicationDate).Days;
+        public int DaysSinceApplied => (ApplicationDate - DateTime.Today).Days;
 
         public enum Status
         {

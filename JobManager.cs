@@ -144,7 +144,8 @@ namespace Job_Application_Tracker
                 Console.WriteLine($"Status: {j.ApplicationStatus}");
                 Console.WriteLine($"Date: {j.ApplicationDate.ToString("yyyy-MM-dd")}\n");
                 Console.WriteLine($"Responded Date: {(j.ResponseDate.HasValue ? j.ResponseDate.Value.ToString("yyyy-MM-dd HH:mm") : "No response")}");
-                
+                Console.WriteLine($"Days passed since application: {(DateTime.Today - j.ApplicationDate).Days}");
+
                 Console.WriteLine("===============================================");
             }
         }
