@@ -1,4 +1,6 @@
-﻿namespace Job_Application_Tracker
+﻿using Spectre.Console;
+
+namespace Job_Application_Tracker
 {
     internal class Program
     {
