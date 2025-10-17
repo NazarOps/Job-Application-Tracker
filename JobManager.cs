@@ -2,17 +2,124 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static Job_Application_Tracker.JobApplication;
 
 namespace Job_Application_Tracker
 {
     public class JobManager
     {
         List<JobApplication> jobApplications = new List<JobApplication>();
-        
-        public void AddApplication(JobApplication application)
+
+        public void Apply()
         {
-            jobApplications.Add(application);
+            bool valid = false;
+
+            while (!valid)
+            {
+                try
+                {
+                    Console.WriteLine("What's the company called?");
+                    Console.Write("\nUser: ");
+                    string NameOfCompany = Console.ReadLine();
+
+                    Console.WriteLine("What's the position title?");
+                    Console.Write("User: ");
+                    string TitleOfPosition = Console.ReadLine();
+
+                    Console.WriteLine("What's the expected salary?");
+                    Console.Write("User: ");
+                    string ExpectedSalary = Console.ReadLine();
+
+                    Console.WriteLine("When did you apply? (YYYY-MM-DD)");
+                    Console.Write("User: ");
+                    string DateOfApplication = Console.ReadLine();
+
+                    DateTime applicationDate;
+                    if (!DateTime.TryParse(DateOfApplication, out applicationDate))
+                    {
+                        Console.WriteLine("Invalid date format. Using today's date");
+                        applicationDate = DateTime.Now;
+                    }
+                    Console.WriteLine("Do you have a response date? (yes/no)");
+                    Console.Write("User: ");
+                    string hasResponse = Console.ReadLine();
+
+                    DateTime? responseDate = null;
+
+                    if (hasResponse?.ToLower() == "yes")
+                    {
+                        Console.Write("User: ");
+                        Console.WriteLine("Enter the response date (yyyy-mm-dd)");
+                        string responseInput = Console.ReadLine();
+                        if (DateTime.TryParse(responseInput, out DateTime parsedDate))
+                        {
+                            responseDate = parsedDate;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid date format. Response date will be to none");
+                        }
+                    }
+
+                    if (hasResponse?.ToLower() == "no")
+                    {
+                        responseDate = null;
+                    }
+
+                    Console.WriteLine("Do you have a interview lined up? (yes/no)");
+                    Console.Write("User: ");
+                    string hasInterview = Console.ReadLine();
+
+                    JobApplication.Status status = Status.Applied; // Declaring status default is applied
+
+                    if (hasInterview.ToLower() == "yes")
+                    {
+                        status = Status.Interview;
+                    }
+
+                    if (hasInterview.ToLower() == "no")
+                    {
+                        status = Status.Applied;
+                    }
+
+                    if (!Regex.IsMatch(TitleOfPosition, @"^[a-zA-Z-\s]+$",))
+                    {
+                        throw new ArgumentException("Invalid characters detected for position title, only letters and spaces are allowed!");
+                    }
+
+
+                    if (!int.TryParse(ExpectedSalary, out int SalaryExpectation) || SalaryExpectation <= 0)
+                    {
+                        throw new ArgumentException("Salary must contain only numbers and no symbols");
+                    }
+
+                    int DesiredSalary = Convert.ToInt32(ExpectedSalary); // converts salary to int after checking if input is valid
+
+                    JobApplication jobapplied = new JobApplication
+                    {
+                        CompanyName = NameOfCompany,
+                        PositionTitle = TitleOfPosition,
+                        SalaryExpectation = DesiredSalary,
+                        ApplicationStatus = status,
+                        ApplicationDate = applicationDate,
+                        ResponseDate = responseDate
+                    };
+
+                    jobApplications.Add(jobapplied);
+                    valid = true;
+                    Console.WriteLine("Job application has been logged");
+                }
+
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                    Thread.Sleep(500);
+                    Console.Clear();
+
+                }
+            }
         }
 
         public void GetSummary()
@@ -24,7 +131,7 @@ namespace Job_Application_Tracker
                 Console.WriteLine($"Title: {j.PositionTitle}");
                 Console.WriteLine($"Expected Salary: {j.SalaryExpectation}\n");
                 Console.WriteLine($"Status: {j.ApplicationStatus}");
-                Console.WriteLine($"Date: {j.ApplicationDate}\n");
+                Console.WriteLine($"Date: {j.ApplicationDate.ToString("yyyy-mm-dd")}\n");
                 Console.WriteLine($"Responded Date: {(j.ResponseDate.HasValue ? j.ResponseDate.Value.ToString("yyyy-MM-dd HH:mm") : "No response")}");
                 
                 Console.WriteLine("===============================================");
@@ -87,7 +194,7 @@ namespace Job_Application_Tracker
                     Console.WriteLine($"Title: {j.PositionTitle}");
                     Console.WriteLine($"Expected Salary: {j.SalaryExpectation}\n");
                     Console.WriteLine($"Status: {j.ApplicationStatus}");
-                    Console.WriteLine($"Date: {j.ApplicationDate}\n");
+                    Console.WriteLine($"Date: {j.ApplicationDate.ToString()}\n");
                     Console.WriteLine($"Responded Date: {(j.ResponseDate.HasValue ? j.ResponseDate.Value.ToString("yyyy-MM-dd HH:mm") : "No response")}");
 
                     Console.WriteLine("===============================================");

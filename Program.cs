@@ -9,6 +9,7 @@
             
 
             JobManager jobManager = new JobManager();
+            
             bool MenuLoop = true;
             
             while (MenuLoop)
@@ -20,7 +21,7 @@
                 Console.WriteLine("4) Sort by date");
                 Console.WriteLine("5) Show statistics");
                 Console.WriteLine("6) Manage jobs");
-                Console.WriteLine("\nType 6 to quit the application");
+                Console.WriteLine("\nType 7 to quit the application");
 
                 Console.Write("\nuser: ");
                 int userinput = Convert.ToInt32(Console.ReadLine());
@@ -29,7 +30,7 @@
                 {
                     case 1:
                         Console.Clear();
-                        new JobApplication().Apply(jobManager);
+                        jobManager.Apply();
                         Console.WriteLine("\nPress any key to go back to menu");
                         Console.ReadKey();
                         Thread.Sleep(500);
@@ -75,13 +76,17 @@
                         Console.Clear();
                         break;
 
-                    
+                    case 6:
+                        Console.Clear();
+                        jobManager.ManageJobs();
+                        break;
 
-                }
-
-                if (userinput == 6)
-                {
-                    jobManager.ManageJobs();
+                    case 7:
+                        Console.Clear();
+                        Console.WriteLine("Good bye, have a nice day");
+                        MenuLoop = false;
+                        break;
+                        
                 }
             }
         }
