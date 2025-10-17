@@ -2,17 +2,135 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static Job_Application_Tracker.JobApplication;
 
 namespace Job_Application_Tracker
 {
     public class JobManager
     {
         List<JobApplication> jobApplications = new List<JobApplication>();
-        
-        public void AddApplication(JobApplication application)
+
+        public void Apply()
         {
-            jobApplications.Add(application);
+            bool valid = false;
+
+            while (!valid)
+            {
+                try
+                {
+                    Console.WriteLine("What's the company called?");
+                    Console.Write("\nUser: ");
+                    string NameOfCompany = Console.ReadLine();
+
+                    Console.WriteLine("What's the position title?");
+                    Console.Write("User: ");
+                    string TitleOfPosition = Console.ReadLine();
+
+                    Console.WriteLine("What's the expected salary?");
+                    Console.Write("User: ");
+                    string ExpectedSalary = Console.ReadLine();
+
+                    Console.WriteLine("When did you apply? (YYYY-MM-DD)");
+                    Console.Write("User: ");
+                    string DateOfApplication = Console.ReadLine();
+
+                    DateTime applicationDate;
+                    if (!DateTime.TryParse(DateOfApplication, out applicationDate))
+                    {
+                        Console.WriteLine("Invalid date format. Using today's date");
+                        applicationDate = DateTime.Now;
+                    }
+
+                    Console.WriteLine("Do you have a response date? (yes/no)");
+                    Console.Write("User: ");
+                    string hasResponse = Console.ReadLine();
+
+                    DateTime? responseDate = null;
+
+                    if (hasResponse?.ToLower() == "yes")
+                    {
+                        Console.WriteLine("Enter the response date (yyyy-mm-dd)");
+                        Console.Write("User: ");
+                        string responseInput = Console.ReadLine();
+                        if (DateTime.TryParse(responseInput, out DateTime parsedDate))
+                        {
+                            responseDate = parsedDate;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid date format. Response date will be to none");
+                        }
+                    }
+
+                    if (hasResponse?.ToLower() == "no")
+                    {
+                        responseDate = null;
+                    }
+
+                    Console.WriteLine("Do you have a interview lined up? (yes/no)");
+                    Console.Write("User: ");
+                    string hasInterview = Console.ReadLine();
+
+                    JobApplication.Status status = Status.Applied; // Declaring status default is applied
+
+                    if (hasInterview.ToLower() == "yes")
+                    {
+                        status = Status.Interview;
+                    }
+
+                    if (hasInterview.ToLower() == "no")
+                    {
+                        status = Status.Applied;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(NameOfCompany))
+                    {
+                        throw new ArgumentException("Invalid characters detected for company name, field can not be empty");
+                    }
+
+                    if (string.IsNullOrWhiteSpace(TitleOfPosition))
+                    {
+                        throw new ArgumentException("Invalid characters detected for position title, field can not be empty");
+                    }
+
+                    if (!Regex.IsMatch(TitleOfPosition, @"^[a-zA-Z-\s]+$"))
+                    {
+                        throw new ArgumentException("Invalid characters detected for position title, only letters and spaces are allowed!");
+                    }
+
+
+                    if (!int.TryParse(ExpectedSalary, out int SalaryExpectation) || SalaryExpectation <= 0)
+                    {
+                        throw new ArgumentException("Salary must contain only numbers and no symbols");
+                    }
+
+                    int DesiredSalary = Convert.ToInt32(ExpectedSalary); // converts salary to int after checking if input is valid
+
+                    JobApplication jobapplied = new JobApplication
+                    {
+                        CompanyName = NameOfCompany,
+                        PositionTitle = TitleOfPosition,
+                        SalaryExpectation = DesiredSalary,
+                        ApplicationStatus = status,
+                        ApplicationDate = applicationDate,
+                        ResponseDate = responseDate
+                    };
+
+                    jobApplications.Add(jobapplied);
+                    valid = true;
+                    Console.WriteLine("Job application has been logged");
+                }
+
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                    Thread.Sleep(1000);
+                    Console.Clear();
+
+                }
+            }
         }
 
         public void GetSummary()
@@ -24,14 +142,11 @@ namespace Job_Application_Tracker
                 Console.WriteLine($"Title: {j.PositionTitle}");
                 Console.WriteLine($"Expected Salary: {j.SalaryExpectation}\n");
                 Console.WriteLine($"Status: {j.ApplicationStatus}");
-                Console.WriteLine($"Date: {j.ApplicationDate}\n");
+                Console.WriteLine($"Date: {j.ApplicationDate.ToString("yyyy-MM-dd")}\n");
                 Console.WriteLine($"Responded Date: {(j.ResponseDate.HasValue ? j.ResponseDate.Value.ToString("yyyy-MM-dd HH:mm") : "No response")}");
                 
                 Console.WriteLine("===============================================");
             }
-            Thread.Sleep(500);
-            Console.ReadKey();
-            Console.Clear();
         }
 
         public void SortByDate()
@@ -87,7 +202,7 @@ namespace Job_Application_Tracker
                     Console.WriteLine($"Title: {j.PositionTitle}");
                     Console.WriteLine($"Expected Salary: {j.SalaryExpectation}\n");
                     Console.WriteLine($"Status: {j.ApplicationStatus}");
-                    Console.WriteLine($"Date: {j.ApplicationDate}\n");
+                    Console.WriteLine($"Date: {j.ApplicationDate.ToString()}\n");
                     Console.WriteLine($"Responded Date: {(j.ResponseDate.HasValue ? j.ResponseDate.Value.ToString("yyyy-MM-dd HH:mm") : "No response")}");
 
                     Console.WriteLine("===============================================");
@@ -133,7 +248,9 @@ namespace Job_Application_Tracker
                         if (UpdateStatus == "1")
                         {
                             selectedJob.ApplicationStatus = JobApplication.Status.Offer;
+                            Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Application status changed to offered");
+                            Console.ResetColor();
                             Thread.Sleep(500);
                             Console.Clear();
                         }
@@ -141,7 +258,9 @@ namespace Job_Application_Tracker
                         if (UpdateStatus == "2")
                         {
                             selectedJob.ApplicationStatus = JobApplication.Status.Rejected;
+                            Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Application status changed to rejected");
+                            Console.ResetColor();
                             Thread.Sleep(500);
                             Console.Clear();
                         }
@@ -149,7 +268,9 @@ namespace Job_Application_Tracker
                         if (UpdateStatus == "3")
                         {
                             selectedJob.ApplicationStatus = JobApplication.Status.Interview;
+                            Console.ForegroundColor = ConsoleColor.Yellow;
                             Console.WriteLine("Application status changed to interview");
+                            Console.ResetColor();
                             Thread.Sleep(500);
                             Console.Clear();
                         }
@@ -161,11 +282,12 @@ namespace Job_Application_Tracker
                 else
                 {
                     Console.WriteLine("No application found with that company name.");
+                    Console.WriteLine("Press any key to go back to menu");
+                    Console.ReadKey();
+                    Thread.Sleep(500);
+                    Console.Clear();
+                    break;
                 }
-
-                Console.WriteLine("Press any key to go back to menu");
-                Console.ReadKey();
-                break;
             }
 
            
