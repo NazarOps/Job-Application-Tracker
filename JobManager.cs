@@ -238,7 +238,7 @@ namespace Job_Application_Tracker
                     if (UserEdit == "2")
                     {
                         Console.WriteLine("Update your status to: ");
-                        Console.WriteLine("1.) Hired");
+                        Console.WriteLine("1.) Offered");
                         Console.WriteLine("2.) Rejected");
                         Console.WriteLine("3.) Interview");
 
@@ -253,6 +253,7 @@ namespace Job_Application_Tracker
                             Console.ResetColor();
                             Thread.Sleep(500);
                             Console.Clear();
+                            break;
                         }
 
                         if (UpdateStatus == "2")
@@ -263,6 +264,7 @@ namespace Job_Application_Tracker
                             Console.ResetColor();
                             Thread.Sleep(500);
                             Console.Clear();
+                            break;
                         }
 
                         if (UpdateStatus == "3")
@@ -273,6 +275,7 @@ namespace Job_Application_Tracker
                             Console.ResetColor();
                             Thread.Sleep(500);
                             Console.Clear();
+                            break;
                         }
                     }
 
