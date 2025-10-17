@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static Job_Application_Tracker.JobApplication;
+using Spectre.Console;
 
 namespace Job_Application_Tracker
 {
@@ -73,16 +74,16 @@ namespace Job_Application_Tracker
                     Console.Write("User: ");
                     string hasInterview = Console.ReadLine();
 
-                    JobApplication.Status status = Status.Applied; // Declaring status default is applied
+                    JobApplication.Status status = JobApplication.Status.Applied; // Declaring status default is applied
 
                     if (hasInterview.ToLower() == "yes")
                     {
-                        status = Status.Interview;
+                        status = JobApplication.Status.Interview;
                     }
 
                     if (hasInterview.ToLower() == "no")
                     {
-                        status = Status.Applied;
+                        status = JobApplication.Status.Applied;
                     }
 
                     if (string.IsNullOrWhiteSpace(NameOfCompany))
@@ -125,7 +126,7 @@ namespace Job_Application_Tracker
 
                 catch (ArgumentException ex)
                 {
-                    Console.WriteLine($"Error: {ex.Message}");
+                    AnsiConsole.MarkupLine($"Error: [red]{ex.Message}[/red]");
                     Thread.Sleep(1000);
                     Console.Clear();
 
@@ -141,7 +142,7 @@ namespace Job_Application_Tracker
                 Console.WriteLine($"\nName: {j.CompanyName}");
                 Console.WriteLine($"Title: {j.PositionTitle}");
                 Console.WriteLine($"Expected Salary: {j.SalaryExpectation}\n");
-                Console.WriteLine($"Status: {j.ApplicationStatus}");
+                Console.WriteLine($"Status: {j.ApplicationStatus.ToString()}");
                 Console.WriteLine($"Date: {j.ApplicationDate.ToString("yyyy-MM-dd")}\n");
                 Console.WriteLine($"Responded Date: {(j.ResponseDate.HasValue ? j.ResponseDate.Value.ToString("yyyy-MM-dd HH:mm") : "No response")}");
                 Console.WriteLine($"Days passed since application: {(DateTime.Today - j.ApplicationDate).Days}");
@@ -176,10 +177,10 @@ namespace Job_Application_Tracker
             int responseCount = jobApplications.Count(job => job.ResponseDate != null);
             
             Console.WriteLine($"Total jobs you've applied to: {jobApplications.Count}");
-            Console.WriteLine($"Total responds: {responseCount}");
-            Console.WriteLine($"Total offers: {TotalOffered}");
-            Console.WriteLine($"Total rejected: {TotalRejected}");
-            Console.WriteLine($"Total interviews: {TotalInterviews}");
+            AnsiConsole.MarkupLine($"Total responds: [blue]{responseCount}[/]");
+            AnsiConsole.MarkupLine($"Total offers: [green]{TotalOffered}[/]");
+            AnsiConsole.MarkupLine($"Total rejected: [red]{TotalRejected}[/]");
+            AnsiConsole.MarkupLine($"Total interviews: [yellow]{TotalInterviews}[/]");
             
         }
 
@@ -239,9 +240,9 @@ namespace Job_Application_Tracker
                     if (UserEdit == "2")
                     {
                         Console.WriteLine("Update your status to: ");
-                        Console.WriteLine("1.) Offered");
-                        Console.WriteLine("2.) Rejected");
-                        Console.WriteLine("3.) Interview");
+                        AnsiConsole.MarkupLine("1.) [green]Offered[/]");
+                        AnsiConsole.MarkupLine("2.) [red]Rejected[/]");
+                        AnsiConsole.MarkupLine("3.) [yellow]Interview[/]");
 
                         Console.Write("User: ");
                         string UpdateStatus = Console.ReadLine();
@@ -249,9 +250,7 @@ namespace Job_Application_Tracker
                         if (UpdateStatus == "1")
                         {
                             selectedJob.ApplicationStatus = JobApplication.Status.Offer;
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine("Application status changed to offered");
-                            Console.ResetColor();
+                            AnsiConsole.MarkupLine("Application status changed to [green]offered[/]");
                             Thread.Sleep(500);
                             Console.Clear();
                             break;
@@ -260,9 +259,7 @@ namespace Job_Application_Tracker
                         if (UpdateStatus == "2")
                         {
                             selectedJob.ApplicationStatus = JobApplication.Status.Rejected;
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Application status changed to rejected");
-                            Console.ResetColor();
+                            AnsiConsole.MarkupLine("Application status changed to [red]rejected[/]");
                             Thread.Sleep(500);
                             Console.Clear();
                             break;
@@ -271,9 +268,7 @@ namespace Job_Application_Tracker
                         if (UpdateStatus == "3")
                         {
                             selectedJob.ApplicationStatus = JobApplication.Status.Interview;
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.WriteLine("Application status changed to interview");
-                            Console.ResetColor();
+                            AnsiConsole.MarkupLine("Application status changed to [yellow]interview[/]");
                             Thread.Sleep(500);
                             Console.Clear();
                             break;
