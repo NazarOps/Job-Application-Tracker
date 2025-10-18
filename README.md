@@ -1,41 +1,69 @@
-# :page_facing_up:Job Application Tracker
+# 📄 Job Application Tracker
 
 This is a simple job application logger program that lets you log your job applications.
 
-How to run the program:
+---
 
-- Clone the Github repository to your local harddrive on your computer
-- Open Visual Studio and click the solid green play button
+## 🚀 How to Run the Program
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. Clone the GitHub repository to your local hard drive.  
+2. Open **Visual Studio** and click the **solid green play button** to run the program.
 
-:computer:Program.cs:
+---
 
-Contains the main menu that has been coded using switch cases for different selections:
-  
-- Case 1: Log your job application. The program will ask for the name of the company you applied to,
-position title, expected salary, what date the job application was made and if you have received a response
-from the employer or not
+## 💻 Program.cs
 
-- Case 2: Displays all of your job applications in ascending order with company name, job title, expected salary, current status (default is applied), date of application, if the application has been responded to by the employer and days passed since the application was made
+Contains the **main menu**, coded using **switch cases** for different selections:
 
-- Case 3: Sorts all of your job applications by application status. Offer is number 1, Interview is number 2, Applied is number 3 and Rejected is number 4.
+- **Case 1:** Log your job application.  
+  The program will ask for:
+  - Company name  
+  - Position title  
+  - Expected salary  
+  - Date of application  
+  - Whether you’ve received a response from the employer  
 
-- Case 4: Sorts all of your job applications by application date in descending order, latest application will show first.
+- **Case 2:** Display all of your job applications in ascending order, showing:  
+  - Company name  
+  - Job title  
+  - Expected salary  
+  - Current status (default: *Applied*)  
+  - Date of application  
+  - Response status  
+  - Days passed since application  
 
-- Case 5: Display all of your job application statistics, you will get information about how many jobs you've applied to, how many applications have been responded to, how many job offers you received, how many rejected applications and lastly how many interviews.
+- **Case 3:** Sort all job applications by **application status**:  
+  1. Offer  
+  2. Interview  
+  3. Applied  
+  4. Rejected  
 
-- Case 6: Manage your job applications, only lets you edit application status (for now).
+- **Case 4:** Sort all job applications by **application date (descending order)** — latest applications appear first.
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+- **Case 5:** Display job application **statistics**, including:  
+  - Total jobs applied  
+  - Total responses received  
+  - Total offers  
+  - Total rejections  
+  - Total interviews  
 
-:incoming_envelope:JobApplications.cs:
+- **Case 6:** Manage job applications.  
+  *(Currently allows editing only of application status.)*
 
-- Contains attributes for a single job application with getters and setters properties for access.
+---
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## ✉️ JobApplications.cs
 
-JobManager.cs:
+Contains attributes for a single job application, with **getter** and **setter** properties for access.
 
-- Contains all the logic and methods for the application. In here we have methods like Apply(), GetSummary(), SortByDate(), SortByStatus(), ShowStatistics() and ManageJobs().
+---
 
+## 💻 JobManager.cs
+
+Contains all the **logic and methods** for the application, including:  
+- `Apply()`  
+- `GetSummary()`  
+- `SortByDate()`  
+- `SortByStatus()`  
+- `ShowStatistics()`  
+- `ManageJobs()`
