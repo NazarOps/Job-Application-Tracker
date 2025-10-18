@@ -140,11 +140,11 @@ namespace Job_Application_Tracker
             Console.WriteLine("Your job Applications: ");
             foreach (JobApplication j in jobApplications)
             {
-                Console.WriteLine($"\nName: {j.CompanyName}");
-                Console.WriteLine($"Title: {j.PositionTitle}");
+                Console.WriteLine($"\nCompany Name: {j.CompanyName}");
+                Console.WriteLine($"Position Title: {j.PositionTitle}");
                 Console.WriteLine($"Expected Salary: {j.SalaryExpectation}\n");
-                Console.WriteLine($"Status: {j.ApplicationStatus.ToString()}");
-                Console.WriteLine($"Date: {j.ApplicationDate.ToString("yyyy-MM-dd")}\n");
+                Console.WriteLine($"Application Status: {j.ApplicationStatus.ToString()}");
+                Console.WriteLine($"Application Date: {j.ApplicationDate.ToString("yyyy-MM-dd")}\n");
                 Console.WriteLine($"Responded Date: {(j.ResponseDate.HasValue ? j.ResponseDate.Value.ToString("yyyy-MM-dd HH:mm") : "No response")}");
                 Console.WriteLine($"Days passed since application: {(DateTime.Today - j.ApplicationDate).Days}");
 
