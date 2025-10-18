@@ -16,6 +16,7 @@ namespace Job_Application_Tracker
             
             while (MenuLoop)
             {
+                Console.Clear();
                 Console.WriteLine("       _       _                            _ _           _   _               _______             _             \r\n      | |     | |         /\\               | (_)         | | (_)             |__   __|           | |            \r\n      | | ___ | |__      /  \\   _ __  _ __ | |_  ___ __ _| |_ _  ___  _ __      | |_ __ __ _  ___| | _____ _ __ \r\n  _   | |/ _ \\| '_ \\    / /\\ \\ | '_ \\| '_ \\| | |/ __/ _` | __| |/ _ \\| '_ \\     | | '__/ _` |/ __| |/ / _ \\ '__|\r\n | |__| | (_) | |_) |  / ____ \\| |_) | |_) | | | (_| (_| | |_| | (_) | | | |    | | | | (_| | (__|   <  __/ |   \r\n  \\____/ \\___/|_.__/  /_/    \\_\\ .__/| .__/|_|_|\\___\\__,_|\\__|_|\\___/|_| |_|    |_|_|  \\__,_|\\___|_|\\_\\___|_|   \r\n                               | |   | |                                                                        \r\n                               |_|   |_|                                                                        \n");
                 Console.WriteLine("========================================================================================================================");
                 Console.WriteLine("");
@@ -26,10 +27,11 @@ namespace Job_Application_Tracker
                 Console.WriteLine("5) Show statistics");
                 Console.WriteLine("6) Manage jobs");
                 Console.WriteLine("\nType 7 to quit the application");
-
+                
                 Console.Write("\nuser: ");
                 int userinput = Convert.ToInt32(Console.ReadLine());
 
+       
                 switch (userinput)
                 {
                     case 1:

@@ -25,13 +25,33 @@ namespace Job_Application_Tracker
                     Console.Write("\nUser: ");
                     string NameOfCompany = Console.ReadLine();
 
+                    if (string.IsNullOrWhiteSpace(NameOfCompany))
+                    {
+                        throw new ArgumentException("Invalid characters detected for company name, field can not be empty");
+                    }
+
                     Console.WriteLine("What's the position title?");
                     Console.Write("User: ");
                     string TitleOfPosition = Console.ReadLine();
 
+                    if (string.IsNullOrWhiteSpace(TitleOfPosition))
+                    {
+                        throw new ArgumentException("Invalid characters detected for position title, field can not be empty");
+                    }
+
+                    if (!Regex.IsMatch(TitleOfPosition, @"^[a-zA-Z-\s]+$"))
+                    {
+                        throw new ArgumentException("Invalid characters detected for position title, only letters and spaces are allowed!");
+                    }
+
                     Console.WriteLine("What's the expected salary?");
                     Console.Write("User: ");
                     string ExpectedSalary = Console.ReadLine();
+
+                    if (!int.TryParse(ExpectedSalary, out int SalaryExpectation) || SalaryExpectation <= 0)
+                    {
+                        throw new ArgumentException("Salary must contain only numbers and no symbols");
+                    }
 
                     Console.WriteLine("When did you apply? (YYYY-MM-DD)");
                     Console.Write("User: ");
@@ -61,7 +81,7 @@ namespace Job_Application_Tracker
                         }
                         else
                         {
-                            Console.WriteLine("Invalid date format. Response date will be to none");
+                            Console.WriteLine("Invalid date format. Response date will be left empty");
                         }
                     }
 
@@ -86,27 +106,6 @@ namespace Job_Application_Tracker
                         status = JobApplication.Status.Applied;
                     }
 
-                    if (string.IsNullOrWhiteSpace(NameOfCompany))
-                    {
-                        throw new ArgumentException("Invalid characters detected for company name, field can not be empty");
-                    }
-
-                    if (string.IsNullOrWhiteSpace(TitleOfPosition))
-                    {
-                        throw new ArgumentException("Invalid characters detected for position title, field can not be empty");
-                    }
-
-                    if (!Regex.IsMatch(TitleOfPosition, @"^[a-zA-Z-\s]+$"))
-                    {
-                        throw new ArgumentException("Invalid characters detected for position title, only letters and spaces are allowed!");
-                    }
-
-
-                    if (!int.TryParse(ExpectedSalary, out int SalaryExpectation) || SalaryExpectation <= 0)
-                    {
-                        throw new ArgumentException("Salary must contain only numbers and no symbols");
-                    }
-
                     int DesiredSalary = Convert.ToInt32(ExpectedSalary); // converts salary to int after checking if input is valid
 
                     JobApplication jobapplied = new JobApplication
@@ -126,8 +125,10 @@ namespace Job_Application_Tracker
 
                 catch (ArgumentException ex)
                 {
-                    AnsiConsole.MarkupLine($"Error: [red]{ex.Message}[/red]");
-                    Thread.Sleep(1000);
+                    AnsiConsole.MarkupLine($"Error: [red]{ex.Message}[/]");
+                    Thread.Sleep(500);
+                    Console.WriteLine("Press any key to go back to menu");
+                    Console.ReadKey();
                     Console.Clear();
 
                 }
@@ -153,7 +154,10 @@ namespace Job_Application_Tracker
 
         public void SortByDate()
         {
-            jobApplications.Sort((a, b) => a.ApplicationDate.CompareTo(b.ApplicationDate));
+            jobApplications = jobApplications
+                .OrderByDescending(job => job.ApplicationDate)
+                .ToList();
+
             foreach (var job in jobApplications)
             {
                 Console.WriteLine($"{job.CompanyName} - {job.ApplicationDate}");
@@ -162,7 +166,16 @@ namespace Job_Application_Tracker
 
         public void SortByStatus()
         {
-            jobApplications.Sort((a, b) => a.ApplicationStatus.CompareTo(b.ApplicationStatus));
+            jobApplications = jobApplications
+                .OrderBy(job => job.ApplicationStatus switch
+                {
+                    JobApplication.Status.Offer => 1,
+                    JobApplication.Status.Interview => 2,
+                    JobApplication.Status.Applied => 3,
+                    JobApplication.Status.Rejected => 4,
+                })
+                .ThenByDescending(job => job.ApplicationDate).ToList();
+
             foreach (var job in jobApplications)
             {
                 Console.WriteLine($"{job.CompanyName} - {job.ApplicationStatus}");
@@ -181,6 +194,7 @@ namespace Job_Application_Tracker
             AnsiConsole.MarkupLine($"Total offers: [green]{TotalOffered}[/]");
             AnsiConsole.MarkupLine($"Total rejected: [red]{TotalRejected}[/]");
             AnsiConsole.MarkupLine($"Total interviews: [yellow]{TotalInterviews}[/]");
+
             
         }
 
