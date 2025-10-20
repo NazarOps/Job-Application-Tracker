@@ -77,7 +77,7 @@ namespace Job_Application_Tracker
                         string responseInput = Console.ReadLine();
                         if (DateTime.TryParse(responseInput, out DateTime parsedDate))
                         {
-                            responseDate = parsedDate;
+                            responseDate = parsedDate + DateTime.Now.TimeOfDay;
                         }
                         else
                         {
