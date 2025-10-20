@@ -10,13 +10,13 @@ namespace Job_Application_Tracker
 {
     public class JobApplication
     {
-        public string CompanyName { get; set; }
-        public string PositionTitle { get; set; }
-        public DateTime ApplicationDate { get; set; }
-        public DateTime? ResponseDate { get; set; }
-        public int SalaryExpectation { get; set; }
+        public string CompanyName;
+        public string PositionTitle;
+        public DateTime ApplicationDate;
+        public DateTime? ResponseDate;
+        public int SalaryExpectation;
 
-        public Status ApplicationStatus { get; set; }
+        public Status ApplicationStatus;
 
         public int DaysSinceApplied => (ApplicationDate - DateTime.Today).Days;
 

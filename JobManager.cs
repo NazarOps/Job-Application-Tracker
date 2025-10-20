@@ -21,6 +21,7 @@ namespace Job_Application_Tracker
             {
                 try
                 {
+                    Console.Clear();
                     Console.WriteLine("What's the company called?");
                     Console.Write("\nUser: ");
                     string NameOfCompany = Console.ReadLine();
