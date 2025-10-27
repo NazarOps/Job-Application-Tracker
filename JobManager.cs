@@ -6,12 +6,13 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static Job_Application_Tracker.JobApplication;
 using Spectre.Console;
+using System.Text.Json;
 
 namespace Job_Application_Tracker
 {
     public class JobManager
     {
-        List<JobApplication> jobApplications = new List<JobApplication>();
+        public List<JobApplication> jobApplications = new List<JobApplication>();
 
         public void Apply()
         {
@@ -120,8 +121,11 @@ namespace Job_Application_Tracker
                     };
 
                     jobApplications.Add(jobapplied);
+                    Console.WriteLine("Job application has been saved");
+                    var savetoJson = JsonSerializer.Serialize(jobApplications, new JsonSerializerOptions { WriteIndented = true});
+                    File.WriteAllText("MyJobs.json", savetoJson);
                     valid = true;
-                    Console.WriteLine("Job application has been logged");
+                    
                 }
 
                 catch (ArgumentException ex)
@@ -212,6 +216,7 @@ namespace Job_Application_Tracker
            
            while(UserInput == "1")
            {
+                Console.Clear();
                 Console.WriteLine("Which application would you like to edit? \n");    
                 foreach(JobApplication j in jobApplications)
                 {

@@ -1,4 +1,5 @@
 ﻿using Spectre.Console;
+using System.Text.Json;
 
 namespace Job_Application_Tracker
 {
@@ -7,11 +8,13 @@ namespace Job_Application_Tracker
         static void Main(string[] args)
         {
             JobApplication jobApplication = new JobApplication();
-
-            
-
             JobManager jobManager = new JobManager();
-            
+
+            string file = "MyJobs.json"; // name of the json file
+            string json = File.ReadAllText(file); // read in contents
+            jobManager.jobApplications = JsonSerializer.Deserialize<List<JobApplication>>(json); // read in job applications from job manager class 
+                                                                                                 // when deserializing a class you and list you need <list<CLASSNAME>
+
             bool MenuLoop = true;
             
             while (MenuLoop)
