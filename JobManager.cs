@@ -122,7 +122,7 @@ namespace Job_Application_Tracker
 
                     jobApplications.Add(jobapplied);
                     Console.WriteLine("Job application has been saved");
-                    var savetoJson = JsonSerializer.Serialize(jobApplications, new JsonSerializerOptions { WriteIndented = true});
+                    var savetoJson = JsonSerializer.Serialize(jobApplications);
                     File.WriteAllText("MyJobs.json", savetoJson);
                     valid = true;
                     
